@@ -1,0 +1,8 @@
+#!/bin/bash
+tmux new-session -d -s lein 'lein update-in :dependencies conj "[org.clojure/tools.nrepl \"0.2.12\"]" -- update-in :plugins conj "[refactor-nrepl \"2.3.0-SNAPSHOT\"]" -- update-in :plugins conj "[cider/cider-nrepl \"0.13.0-SNAPSHOT\"]" -- repl :headless :port 7000'
+tmux split-window -h 'sudo -u postgres psql'
+tmux select-pane -L
+tmux split-window -v 'sleep 1m && lein figwheel'
+tmux select-pane -R
+tmux detach -s lein
+
